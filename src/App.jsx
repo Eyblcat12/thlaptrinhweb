@@ -9,6 +9,7 @@ import Contact from './pages/Contact';
 import Cart from './pages/Cart';
 import { Checkout, OrderSuccess } from './pages/Checkout';
 import NotFound from './pages/NotFound';
+import ManageProducts from './pages/ManageProducts';
 
 export default function App() {
   const { pathname } = useLocation();
@@ -22,6 +23,7 @@ export default function App() {
       '/cart': 'Giỏ hàng',
       '/checkout': 'Đặt hàng mô phỏng',
       '/order-success': 'Đặt hàng thành công',
+      '/admin/products': 'Quản lý sản phẩm',
     };
     document.title = `${titles[pathname] || 'Khám phá công nghệ'} | NOVA`;
   }, [pathname]);
@@ -31,6 +33,7 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="products" element={<Products />} />
         <Route path="products/:id" element={<ProductDetail />} />
+        <Route path="admin/products" element={<ManageProducts />} />
         <Route path="deals" element={<Products deals />} />
         <Route path="about-us" element={<About />} />
         <Route path="contact" element={<Contact />} />

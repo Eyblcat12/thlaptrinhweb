@@ -53,7 +53,7 @@ export default function About() {
           <p>
             Chúng mình chọn cách giới thiệu sản phẩm rõ ràng, sắp xếp thông tin gọn gàng và đặt trải
             nghiệm của bạn ở trung tâm. Website này là dự án học tập môn Lập trình Web, xây dựng
-            bằng React, Vite và React Router.
+            bằng React, Vite, React Router và API ASP.NET Core với EF Core.
           </p>
         </div>
       </section>
@@ -104,7 +104,7 @@ export default function About() {
           ],
           [
             'Dữ liệu của tôi được lưu ở đâu?',
-            'Giỏ hàng được lưu trong localStorage trên trình duyệt của bạn. Mã đơn demo và tổng tiền được lưu trong sessionStorage. Biểu mẫu liên hệ, nhận tin và giao hàng không gửi thông tin tới máy chủ.',
+            'Sản phẩm và danh mục được lưu trong SQLite qua API ASP.NET Core. Giỏ hàng ở localStorage; mã giảm giá và kết quả đơn demo ở sessionStorage. Biểu mẫu liên hệ, nhận tin và giao hàng vẫn là mô phỏng, không gửi thông tin cá nhân tới máy chủ.',
           ],
         ].map(([q, a]) => (
           <details key={q}>

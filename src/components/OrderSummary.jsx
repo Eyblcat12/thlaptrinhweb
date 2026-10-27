@@ -4,8 +4,8 @@ import { cartTotals } from '../lib/cart';
 import { useShop } from '../context/shop';
 import Icon from './Icon';
 export default function OrderSummary({ checkout = false }) {
-  const { cart, coupon } = useShop();
-  const { subtotal, discountAmount, shipping, total } = cartTotals(cart, coupon);
+  const { cart, coupon, products } = useShop();
+  const { subtotal, discountAmount, shipping, total } = cartTotals(cart, coupon, products);
   return (
     <aside className="order-summary">
       <h2>Tóm tắt đơn hàng</h2>

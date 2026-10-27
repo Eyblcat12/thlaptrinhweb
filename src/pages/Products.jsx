@@ -1,10 +1,13 @@
 import { Link, useSearchParams } from 'react-router';
-import { categories, discount, normalize, products } from '../data/products';
+import { discount, normalize } from '../data/products';
+import { useShop } from '../context/shop';
+import CatalogStatus from '../components/CatalogStatus';
 import ProductCard from '../components/ProductCard';
 import Breadcrumb from '../components/Breadcrumb';
 import Icon from '../components/Icon';
 
 export default function Products({ deals = false }) {
+  const { products, categories, loading, error } = useShop();
   const [params, setParams] = useSearchParams();
   const category = params.get('category') || 'all';
   const query = params.get('q') || '';
@@ -39,6 +42,12 @@ export default function Products({ deals = false }) {
           : b.reviews - a.reviews,
   );
   const hasFilters = category !== 'all' || brand !== 'all' || price !== 'all' || query;
+  if (loading || error)
+    return (
+      <div className="container page-content">
+        <CatalogStatus />
+      </div>
+    );
   return (
     <div className="container page-content">
       <Breadcrumb items={[{ label: deals ? 'Ưu đãi' : 'Sản phẩm' }]} />

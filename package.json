@@ -7,9 +7,15 @@
     "dev": "vite --host 127.0.0.1 --port 3000",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1 --port 3000",
-    "test": "node --test tests/*.test.js"
+    "test": "node --test tests/*.test.js",
+    "dotnet": "node scripts/dotnet.mjs",
+    "api": "node scripts/dotnet.mjs run --project backend/Nova.Api",
+    "api:build": "node scripts/dotnet.mjs build backend/Nova.Api",
+    "db:update": "node scripts/dotnet.mjs ef database update --project backend/Nova.Api",
+    "test:api": "node scripts/test-api.mjs"
   },
   "dependencies": {
+    "axios": "^1.20.0",
     "lucide-react": "^1.61.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",

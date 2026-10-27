@@ -1,0 +1,32 @@
+[
+  {
+    "id": "phone",
+    "name": "Điện thoại",
+    "icon": "phone",
+    "sortOrder": 0
+  },
+  {
+    "id": "laptop",
+    "name": "Laptop",
+    "icon": "laptop",
+    "sortOrder": 1
+  },
+  {
+    "id": "audio",
+    "name": "Âm thanh",
+    "icon": "headphones",
+    "sortOrder": 2
+  },
+  {
+    "id": "watch",
+    "name": "Đồng hồ",
+    "icon": "watch",
+    "sortOrder": 3
+  },
+  {
+    "id": "accessory",
+    "name": "Phụ kiện",
+    "icon": "mouse",
+    "sortOrder": 4
+  }
+]

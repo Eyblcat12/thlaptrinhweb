@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { categories, products } from '../data/products';
+import { useShop } from '../context/shop';
+import CatalogStatus from '../components/CatalogStatus';
 import ProductCard from '../components/ProductCard';
 import Icon from '../components/Icon';
 
@@ -11,6 +12,7 @@ const benefits = [
   ['headphones', 'Luôn bên bạn', 'Tư vấn tận tâm, dễ hiểu'],
 ];
 export default function Home() {
+  const { products, categories, loading, error } = useShop();
   const [active, setActive] = useState('all');
   const featured =
     active === 'all'
@@ -153,6 +155,10 @@ export default function Home() {
             </button>
           ))}
         </div>
+        <CatalogStatus />
+        {!loading && !error && products.length === 0 && (
+          <p className="demo-note">Chưa có sản phẩm. Thêm sản phẩm ở trang quản lý để bắt đầu.</p>
+        )}
         <div className="product-grid">
           {featured.map((p) => (
             <ProductCard key={p.id} product={p} />

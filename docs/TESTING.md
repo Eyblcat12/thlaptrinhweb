@@ -1,6 +1,22 @@
 # Kết quả kiểm tra — NOVA
 
-Ngày kiểm tra: **25/10/2026**.
+## Bổ sung API backend — 27/10/2026
+
+- `npm test`: **6/6 đạt**, thêm trường hợp giữ giỏ khi API chưa tải và tính tiền theo giá từ backend.
+- `npm run build`: **đạt**.
+- `npm run api:build`: **đạt**, 0 lỗi / 0 cảnh báo.
+- `npm run db:update`: migration `InitialCreate` đã áp dụng, database hiện hành đúng schema.
+- `npm run test:api`: **11/11 nhóm đạt** bằng HTTP Axios tới Kestrel thật và database SQLite riêng.
+
+Các nhóm API bao gồm migration + seed, OpenAPI, CORS allowlist, POST/GET/PUT/DELETE cả hai controller, mã trùng 409, DTO sai 400, mã thiếu 404, khóa ngoại 409, dữ liệu giữ sau restart và không seed lại các bản ghi đã xóa.
+
+Đã thử trực tiếp trên trình duyệt tại `/admin/products`: Axios POST tạo sản phẩm thử nghiệm, reload GET vẫn thấy sản phẩm; GET theo ID và PUT sửa tên/giá; trang chi tiết và giỏ dùng giá mới 1.290.000đ, phí giao hàng 30.000đ; hủy xóa giữ sản phẩm; xác nhận DELETE rồi reload còn đúng 12 sản phẩm seed và sản phẩm đã xóa được bỏ khỏi giỏ. Không có lỗi console trong luồng này. Sản phẩm thử nghiệm do agent tạo đã được dọn bằng DELETE.
+
+API test dùng `.tools/api-test-*`, không xóa dữ liệu database cửa hàng. Frontend và API có thể chạy riêng để trình bày Network requests. Kiểm thử giao diện thực hiện bằng công cụ điều khiển trình duyệt, chưa có E2E trình duyệt tự động trong CI.
+
+## Kiểm tra giao diện ban đầu — 25/10/2026
+
+Kiểm tra bổ sung 27/10: dừng API → trang quản lý hiển thị lỗi và khóa nút lưu; chạy lại API → nút Thử lại tải về đúng 12 sản phẩm. Bố cục quản lý ở viewport 390 × 844 không tràn ngang. Ảnh trang quản lý: [manage-desktop.png](manage-desktop.png).
 
 ## Kiểm tra tự động
 

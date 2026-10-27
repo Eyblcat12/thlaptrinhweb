@@ -1,9 +1,44 @@
-import { useEffect, useRef, useState } from 'react';
-import { addItem, CART_KEY, readCart } from '../lib/cart';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { addItem, CART_KEY, readCart, sanitizeCart } from '../lib/cart';
 import { ShopContext } from './shop';
+import { apiError, categoriesApi, productsApi } from '../services/api';
 
 export function ShopProvider({ children }) {
   const [cart, setCart] = useState(readCart);
+  const [products, setProducts] = useState([]);
+  const [catalogCategories, setCatalogCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const request = useRef(null);
+  const reloadCatalog = useCallback(async () => {
+    request.current?.abort();
+    const controller = new AbortController();
+    request.current = controller;
+    setLoading(true);
+    setError('');
+    try {
+      const [items, groups] = await Promise.all([
+        productsApi.getAll(controller.signal),
+        categoriesApi.getAll(controller.signal),
+      ]);
+      if (controller.signal.aborted) return false;
+      setProducts(items);
+      setCatalogCategories(groups);
+      setCart((current) => sanitizeCart(current, items));
+      setLoading(false);
+      return true;
+    } catch (failure) {
+      if (controller.signal.aborted) return false;
+      setError(apiError(failure));
+      setLoading(false);
+      return false;
+    }
+  }, []);
+  useEffect(() => {
+    reloadCatalog();
+    return () => request.current?.abort();
+  }, [reloadCatalog]);
+  const categories = [{ id: 'all', name: 'Tất cả sản phẩm', icon: 'grid' }, ...catalogCategories];
   const [toast, setToast] = useState('');
   const [coupon, setCoupon] = useState(() => {
     try {
@@ -39,7 +74,8 @@ export function ShopProvider({ children }) {
       notify('Tối đa 10 sản phẩm mỗi loại trong đơn hàng.');
       return;
     }
-    setCart((current) => addItem(current, id));
+    if (!products.some((p) => p.id === id)) return;
+    setCart((current) => addItem(current, id, products));
     notify('Đã thêm sản phẩm vào giỏ hàng!');
   }
   function setQuantity(id, quantity) {
@@ -55,6 +91,11 @@ export function ShopProvider({ children }) {
     <ShopContext.Provider
       value={{
         cart,
+        products,
+        categories,
+        loading,
+        error,
+        reloadCatalog,
         addToCart,
         setQuantity,
         coupon,

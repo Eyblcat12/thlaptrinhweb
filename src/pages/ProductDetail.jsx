@@ -1,15 +1,22 @@
 import { Link, useParams } from 'react-router';
-import { categories, discount, money, products } from '../data/products';
+import { discount, money } from '../data/products';
 import { useShop } from '../context/shop';
 import Breadcrumb from '../components/Breadcrumb';
 import ProductCard from '../components/ProductCard';
 import Icon from '../components/Icon';
 import NotFound from './NotFound';
+import CatalogStatus from '../components/CatalogStatus';
 
 export default function ProductDetail() {
   const { id } = useParams();
+  const { products, categories, addToCart, loading, error } = useShop();
   const p = products.find((item) => item.id === id);
-  const { addToCart } = useShop();
+  if (loading || error)
+    return (
+      <div className="container page-content">
+        <CatalogStatus />
+      </div>
+    );
   if (!p) return <NotFound />;
   return (
     <div className="container page-content">

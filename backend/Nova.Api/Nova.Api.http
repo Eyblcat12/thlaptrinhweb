@@ -1,0 +1,58 @@
+@baseUrl = http://localhost:5080
+
+### Kiểm tra kết nối
+GET {{baseUrl}}/api/health
+
+### GET danh sách
+GET {{baseUrl}}/api/products
+
+### GET theo mã
+GET {{baseUrl}}/api/products/sony-wh-1000xm5
+
+### POST - tạo sản phẩm thử nghiệm
+POST {{baseUrl}}/api/products
+Content-Type: application/json
+
+{
+  "id": "nova-demo-headphones",
+  "name": "Tai nghe NOVA Demo",
+  "category": "audio",
+  "brand": "NOVA",
+  "subtitle": "Sản phẩm thực hành POST.",
+  "price": 1490000,
+  "originalPrice": 1990000,
+  "rating": 0,
+  "reviews": 0,
+  "color": "Đen",
+  "art": "headphones",
+  "background": "#efeee9",
+  "badge": "Mới",
+  "specs": { "Kết nối": "Bluetooth 5.3" }
+}
+
+### PUT - cập nhật toàn bộ sản phẩm vừa tạo
+PUT {{baseUrl}}/api/products/nova-demo-headphones
+Content-Type: application/json
+
+{
+  "id": "nova-demo-headphones",
+  "name": "Tai nghe NOVA Demo - Đã cập nhật",
+  "category": "audio",
+  "brand": "NOVA",
+  "subtitle": "Sản phẩm thực hành PUT.",
+  "price": 1290000,
+  "originalPrice": 1990000,
+  "rating": 0,
+  "reviews": 0,
+  "color": "Đen",
+  "art": "headphones",
+  "background": "#efeee9",
+  "badge": "Ưu đãi",
+  "specs": { "Kết nối": "Bluetooth 5.3" }
+}
+
+### DELETE - chỉ xóa sản phẩm thử nghiệm vừa tạo
+DELETE {{baseUrl}}/api/products/nova-demo-headphones
+
+### GET danh mục
+GET {{baseUrl}}/api/categories

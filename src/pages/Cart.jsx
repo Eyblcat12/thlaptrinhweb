@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { useShop } from '../context/shop';
-import { money, products } from '../data/products';
+import { money } from '../data/products';
+import CatalogStatus from '../components/CatalogStatus';
 import Breadcrumb from '../components/Breadcrumb';
 import OrderSummary from '../components/OrderSummary';
 import Icon from '../components/Icon';
 
 export default function Cart() {
-  const { cart, setQuantity, coupon, setCoupon } = useShop();
+  const { cart, products, setQuantity, coupon, setCoupon, loading, error } = useShop();
   const [input, setInput] = useState(coupon);
   const [couponError, setCouponError] = useState('');
   function applyCoupon(e) {
@@ -19,6 +20,12 @@ export default function Cart() {
       setCouponError('Mã chưa hợp lệ. Thử NOVA10 để giảm 10%, tối đa 500.000đ.');
     }
   }
+  if (loading || error)
+    return (
+      <div className="container page-content">
+        <CatalogStatus />
+      </div>
+    );
   return (
     <div className="container page-content">
       <Breadcrumb items={[{ label: 'Giỏ hàng' }]} />

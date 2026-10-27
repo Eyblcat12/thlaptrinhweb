@@ -6,11 +6,18 @@ import { money } from '../data/products';
 import Breadcrumb from '../components/Breadcrumb';
 import OrderSummary from '../components/OrderSummary';
 import Icon from '../components/Icon';
+import CatalogStatus from '../components/CatalogStatus';
 
 export function Checkout() {
-  const { cart, coupon, clearCart } = useShop();
+  const { cart, coupon, clearCart, products, loading, error } = useShop();
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
+  if (loading || error)
+    return (
+      <div className="container page-content">
+        <CatalogStatus />
+      </div>
+    );
   // Trong lúc điều hướng thành công, giỏ đã được xóa nhưng trang chưa unmount.
   if (!cart.length && !submitting) return <Navigate to="/cart" replace />;
   function submit(e) {
@@ -19,7 +26,7 @@ export function Checkout() {
     setSubmitting(true);
     const order = {
       id: `NOVA-${Date.now().toString(36).toUpperCase()}`,
-      total: cartTotals(cart, coupon).total,
+      total: cartTotals(cart, coupon, products).total,
       count: cart.reduce((sum, item) => sum + item.quantity, 0),
     };
     // Chỉ lưu mã đơn và tổng tiền demo; không lưu dữ liệu liên hệ của khách.

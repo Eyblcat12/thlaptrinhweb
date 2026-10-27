@@ -95,6 +95,7 @@ export default function Layout() {
                 ['/deals', 'Ưu đãi'],
                 ['/about-us', 'Về NOVA'],
                 ['/contact', 'Liên hệ'],
+                ['/admin/products', 'Quản lý'],
               ].map(([to, label]) => (
                 <NavLink key={to} to={to} end={to === '/'}>
                   {label}
@@ -175,7 +176,7 @@ export default function Layout() {
             <p>
               Website thực hành môn Lập trình Web.
               <br />
-              Sản phẩm và giao dịch là dữ liệu mô phỏng.
+              Sản phẩm lưu qua API; đặt hàng là mô phỏng.
             </p>
             <Link className="footer-contact" to="/contact">
               Chúng mình luôn lắng nghe <Icon name="arrowUp" size={16} />

@@ -6,3 +6,11 @@ dist/
 *.log
 .DS_Store
 test-results/
+.tools/
+**/bin/
+**/obj/
+**/App_Data/
+*.db
+*.db-shm
+*.db-wal
+**/appsettings.Local.json

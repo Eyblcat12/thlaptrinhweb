@@ -1,14 +1,15 @@
-import { products } from '../data/products.js';
-
 export const CART_KEY = 'nova-cart-v1';
-export function sanitizeCart(value) {
+// Không xóa giỏ trước khi API trả về danh sách sản phẩm hiện hành.
+export function sanitizeCart(value, products) {
   if (!Array.isArray(value)) return [];
   const seen = new Set();
   return value
     .filter((item) => {
       if (
         !item ||
-        !products.some((p) => p.id === item.id) ||
+        typeof item.id !== 'string' ||
+        !item.id ||
+        (products && !products.some((p) => p.id === item.id)) ||
         !Number.isInteger(item.quantity) ||
         item.quantity < 1 ||
         seen.has(item.id)
@@ -26,7 +27,7 @@ export function readCart() {
     return [];
   }
 }
-export function addItem(cart, id) {
+export function addItem(cart, id, products = []) {
   if (!products.some((p) => p.id === id)) return cart;
   return cart.some((item) => item.id === id)
     ? cart.map((item) =>
@@ -34,8 +35,8 @@ export function addItem(cart, id) {
       )
     : [...cart, { id, quantity: 1 }];
 }
-export function cartTotals(cart, coupon = '') {
-  const subtotal = sanitizeCart(cart).reduce(
+export function cartTotals(cart, coupon = '', products = []) {
+  const subtotal = sanitizeCart(cart, products).reduce(
     (sum, item) => sum + products.find((p) => p.id === item.id).price * item.quantity,
     0,
   );
